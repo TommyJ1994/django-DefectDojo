@@ -230,7 +230,8 @@ class ImportScanForm(forms.Form):
                          ("AppSpider Scan", "AppSpider Scan"), ("Veracode Scan", "Veracode Scan"),
                          ("Checkmarx Scan", "Checkmarx Scan"), ("ZAP Scan", "ZAP Scan"),
                          ("Arachni Scan", "Arachni Scan"), ("VCG Scan", "VCG Scan"),
-                         ("Dependency Check Scan", "Dependency Check Scan"), ("Retire.js Scan", "Retire.js Scan"), ("Node Security Platform Scan", "Node Security Platform Scan"),
+                         ("Dependency Check Scan", "Dependency Check Scan"), ("Retire.js Scan", "Retire.js Scan"),
+                         ("Node Security Platform Scan", "Node Security Platform Scan"), ("Snyk Scan", "Snyk Scan"),
                          ("Generic Findings Import", "Generic Findings Import"))
     scan_date = forms.DateTimeField(
         required=True,
