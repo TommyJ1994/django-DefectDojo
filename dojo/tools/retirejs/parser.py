@@ -31,11 +31,13 @@ class RetireJsParser(object):
 
         for node in tree:
             for result in node['results']:
-                for vulnerability in result['vulnerabilities']:
-                    item = get_item(vulnerability, test, node['file'])
-                    item.title += " (" + result['component'] + ", " + result['version'] + ")"
-                    unique_key = item.title + hashlib.md5(item.references).hexdigest() + hashlib.md5(node['file']).hexdigest()
-                    items[unique_key] = item
+                if 'vulnerabilities' in result:
+                    for vulnerability in result['vulnerabilities']:
+                        item = get_item(vulnerability, test, node['file'])
+                        item.title += " (" + result['component'] + ", " + result['version'] + ")"
+                        item.description += "\n\n Raw Result: " + str(json.dumps(vulnerability, indent=4, sort_keys=True))
+                        unique_key = item.title + hashlib.md5(item.references).hexdigest() + hashlib.md5(node['file']).hexdigest()
+                        items[unique_key] = item
 
         return items.values()
 
@@ -47,8 +49,8 @@ def get_item(item_node, test, file):
         title=item_node['identifiers']['summary']
     elif 'CVE' in item_node['identifiers']:
         title="".join(item_node['identifiers']['CVE'])
-
-    print(title)
+    elif 'osvdb' in item_node['identifiers']:
+        title="".join(item_node['identifiers']['osvdb'])
 
     finding = Finding(title=title,
                       test=test,
